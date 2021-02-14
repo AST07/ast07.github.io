@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Random Integer Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Aditya Singh Tejas">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython.min.js" integrity="sha512-QqJtZYGp0eHzvOxKw2RUODSL2iVW/2FH5NAaEobhgiVD0rUTJMVo4oLYd9QyEYwit0en+CGeft8eV/zEFeNPxA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.1/brython_stdlib.min.js" integrity="sha512-+w8uBdt0FTsenu79jeXSP+l6WKTPhQwTtqnJMiyYCvb1IvbhGSwf7O+qZmcaX3dsOB2J3AOWGR/DKQMevte9hQ==" crossorigin="anonymous"></script>
+    <style type="text/css">
+    	body {
+    		display: flex;
+    		flex-direction: column;
+    		text-align: center;
+    		align-items: center;
+    		font-family: 'Reggae One', cursive;
+    		color: steelblue;
+    	}
+    	input {
+    		outline: none;
+    		font-family: inherit;
+    		font-size: 1.5em;
+    		border: solid 1px steelblue;
+    		width: 5em;
+    		height: 1em;
+    		padding: 0.5em;
+    		border-radius: 0.5em;
+    	}
+    	button {
+    		outline: none;
+    		font-family: inherit;
+    		border: solid 1px steelblue;
+    		font-size: 1em;
+    		padding: 0.5em;
+    		border-radius: 0.5em;
+    		background-color: white;
+    		color: steelblue;
+    	}
+    	button:hover,
+    	input:focus {
+    		background-color: steelblue;
+    		color: white;
+    	}
+    	.flex-row {
+    		display: flex;
+    		align-content: space-between;
+    		align-items: center;
+    		text-align: center;
+    		line-height: 0.5em;
+    	}
+    	.item {
+    		margin-right: 2em;
+    	}
+    	.result {
+    		font-size: 5em;
+    	}
+    	.footer {
+    		font-family: Helvetica;
+    		position: absolute;
+    		bottom: 0;
+    		margin-bottom: 100vh-100px;
+    	}
+    </style>
+</head>
+<body onload="brython()">
+    <h1>Random Integer Generator</h1><br>
+    <div class="flex-row">
+    	<h2 class="item">Min</h2>
+	    <input type="text" id="from" class="item">
+	    <h2 class="item">Max</h2>
+	    <input type="text" id="to">
+	</div><br><br><br>
+	<button id="gen-btn">Generate</button><br><br><br>
+	<h1 id="output" class="result"></h1>
+	<br><br><br>
+	<div class="footer">
+		<h3>Made with <a href="https://brython.info/">Brython</a></h3>
+		<p>&copy; 2021 Aditya Singh Tejas</p>
+	</div>
+    <script type="text/python" id="script0">
+    	from browser import document
+    	import random
+
+    	def generate(event,beg,end):
+    		random_number=random.randint(beg,end)
+    		document['output'].text=str(random_number)
+
+    	document['gen-btn'].bind('click',lambda x:generate(None,int(document['from'].value),int(document['to'].value)))
+    </script>
+</body>
+</html>
