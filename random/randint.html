@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Random Integer Generator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Aditya Singh Tejas">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
@@ -48,7 +48,6 @@
     		align-content: space-between;
     		align-items: center;
     		text-align: center;
-    		line-height: 0.5em;
     	}
     	.item {
     		margin-right: 2em;
@@ -57,11 +56,17 @@
     		font-size: 5em;
     	}
     	.footer {
+            display: flex;
+            text-align: center;
+            align-items: center;
     		font-family: Helvetica;
     		position: absolute;
     		bottom: 0;
     		margin-bottom: 100vh-100px;
     	}
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body onload="brython()">
@@ -74,20 +79,38 @@
 	</div><br><br><br>
 	<button id="gen-btn">Generate</button><br><br><br>
 	<h1 id="output" class="result"></h1>
-	<br><br><br>
+    <p id="error" class="error"></p>
 	<div class="footer">
-		<h3>Made with <a href="https://brython.info/">Brython</a></h3>
-		<p>&copy; 2021 Aditya Singh Tejas</p>
+		<p>Made with <a href="https://brython.info/">Brython</a></p>
+		&nbsp;<p>| &copy; 2021 Aditya Singh Tejas</p>
 	</div>
     <script type="text/python" id="script0">
-    	from browser import document
+    	from browser import document,console
     	import random
 
     	def generate(event,beg,end):
-    		random_number=random.randint(beg,end)
-    		document['output'].text=str(random_number)
+            document['output'].text=''
+            if beg!='' and end!='':
+                try: 
+                    int(beg)
+                    try:
+                        int(end)
+                    except:
+                        document['error'].text='Input must be an integer'
+                        return
+                except:
+                    document['error'].text='Input must be an integer'
+                    return
+                if int(beg)>int(end):
+                    document['error'].text='Minimum can not be greater than maximum'
+                else:
+                    document['error'].text=''
+                    random_number=random.randint(int(beg),int(end))
+                    document['output'].text=str(random_number)
+            else:
+                document['error'].text='Input can not be blank'
 
-    	document['gen-btn'].bind('click',lambda x:generate(None,int(document['from'].value),int(document['to'].value)))
+    	document['gen-btn'].bind('click',lambda x:generate(None,document['from'].value,document['to'].value))
     </script>
 </body>
 </html>
